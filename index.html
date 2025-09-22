@@ -105,13 +105,13 @@ button[type="submit"]:hover { background: var(--accent); }
   transition: background 0.5s, color 0.3s, transform 0.4s;
   opacity: 0;
   transform: translateY(20px);
-  background: #0288d1; /* Color base para la mayoría de tarjetas */
+  background: #0288d1;
   color: #fff;
 }
 
 /* Colores especiales */
-.tarjeta.h12 { background: #b2ebf2; color: #222; }  /* mínima */
-.tarjeta.h00 { background: #ffb74d; color: #222; }  /* máxima */
+.tarjeta.h12 { background: #b2ebf2; color: #222; }
+.tarjeta.h00 { background: #ffb74d; color: #222; }
 
 .tarjeta.mostrar { opacity:1; transform: translateY(0); }
 
@@ -275,14 +275,17 @@ document.getElementById('obsForm').addEventListener('submit', e=>{
   const hr = humedadRelativa(tSeca,tHum,pres);
   const roc = puntoRocio(tSeca,hr);
 
+  // *** NUEVO ORDEN Y SOLO ESOS CUATRO DATOS ***
   let html = `<strong>Observación ${hora} UTC</strong><br>
       Temp. Seca: ${tSeca.toFixed(1)} °C<br>
+      Punto de Rocío: ${roc.toFixed(1)} °C<br>
       Temp. Húmeda: ${tHum.toFixed(1)} °C<br>
-      Humedad Relativa: ${Math.round(hr)} %<br>
-      Punto de Rocío: ${roc.toFixed(1)} °C
-      ${agua ? `<br>Agua caída: ${agua} mm` : ''}
-      ${tmin ? `<br>Temp. Mínima: ${tmin} °C` : ''}
-      ${tmax ? `<br>Temp. Máxima: ${tmax} °C` : ''}`;
+      Humedad Relativa: ${Math.round(hr)} %`;
+
+  // Datos extra (agua, mín/máx) solo para sumar agua, no para mostrar
+  if (agua) html += `<br>Agua caída: ${agua} mm`;
+  if (tmin) html += `<br>Temp. Mínima: ${tmin} °C`;
+  if (tmax) html += `<br>Temp. Máxima: ${tmax} °C`;
 
   const t = document.getElementById('obs_'+hora);
   t.innerHTML = html;
