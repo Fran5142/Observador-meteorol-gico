@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observaciones Meteorológicas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-light: #cce7ff;
+  --card-light: #003366;
+  --text-card-light: #ffffff;
+  --bg-dark: #1e2a35;
+  --card-dark: #2f4a60;
+  --text-dark: #e0e0e0;
+  --primary: #0066cc;
+  --accent: #2196f3;
+  --footer-color: #00509e; /* color más acorde para el nombre del cabo */
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-light);
+  color: #222;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 0.3s, color 0.3s;
+}
+
+h1 { text-align: center; margin-bottom: 1rem; }
+
+/* Contenedor botones alineados */
+#botones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+#toggleMode, #resetBtn {
+  padding: 0.5rem 1rem;
+  background: rgba(0,0,0,0.15);
+  color: #222;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+#toggleMode:hover, #resetBtn:hover { background: rgba(0,0,0,0.25); }
+
+form {
+  background: #e6f0fa;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  transition: background 0.3s;
+}
+
+label { display: block; margin-top: 0.8rem; font-weight: 600; }
+input, select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem;
+  background: #fff;
+  color: #222;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 6px var(--primary);
+}
+
+button[type="submit"] {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+button[type="submit"]:hover { background: var(--accent); }
+
+#observaciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+  max-width: 1000px;
+}
+
+.tarjeta {
+  background: var(--card-light);
+  color: var(--text-card-light);
+  border-radius: 0.8rem;
+  padding: 1rem;
+  margin: 0.5rem;
+  flex: 1 1 22%;
+  min-width: 220px;
+  box-sizing: border-box;
+  transition: background 0.3s, color 0.3s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+#recuadroAgua {
+  background: #0066cc;
+  color: #fff;
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+body.dark form { background: #2c4660; }
+body.dark input, body.dark select { background: #2e3b47; border-color: #555; color: #fff; }
+body.dark .tarjeta { background: var(--card-dark); color: var(--text-dark); }
+body.dark button[type="submit"], body.dark #toggleMode, body.dark #resetBtn { background: #1d78c1; }
+body.dark #recuadroAgua { background: #2196f3; color: #e0e0e0; }
+
+#extraCampos { margin-top: 0.5rem; }
+
+footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+footer span { color: var(--footer-color); }
+body.dark footer span { color: #77b5fe; }
+</style>
+</head>
+<body>
+
+<div id="botones">
+  <button id="toggleMode">Modo oscuro</button>
+  <button id="resetBtn">Reiniciar todo</button>
+</div>
+
+<h1>Observaciones Meteorológicas</h1>
+
+<div id="recuadroAgua">Agua caída total 24h: 0 mm</div>
+
+<form id="obsForm">
+  <label for="hora">Hora UTC</label>
+  <select id="hora" required>
+    <option value="">Seleccione...</option>
+    <option value="15">15 UTC</option>
+    <option value="18">18 UTC</option>
+    <option value="21">21 UTC</option>
+    <option value="00">00 UTC</option>
+    <option value="03">03 UTC</option>
+    <option value="06">06 UTC</option>
+    <option value="09">09 UTC</option>
+    <option value="12">12 UTC</option>
+  </select>
+
+  <label>Temperatura Seca (°C)</label>
+  <input type="number" step="0.1" id="tseca" required>
+
+  <label>Temperatura Húmeda (°C)</label>
+  <input type="number" step="0.1" id="thum" required>
+
+  <label>Presión atmosférica (hPa)</label>
+  <input type="number" step="0.1" id="pres" value="1013" required>
+
+  <div id="extraCampos"></div>
+
+  <button type="submit">Agregar Observación</button>
+</form>
+
+<div id="observaciones"></div>
+
+<footer>Creado por <span>Cabo 2º (Met.) Francisco Salas Muñoz</span>. Fecha: 22/09/2025</footer>
+
+<script>
+// ===== Cálculos =====
+function es(T){ return 6.112 * Math.exp((17.62 * T)/(243.12 + T)); }
+function humedadRelativa(tSeca, tHum, pres){
+  const eHum = es(tHum) - 0.00066 * pres * (tSeca - tHum);
+  const eSec = es(tSeca);
+  return Math.min(100, (eHum / eSec) * 100);
+}
+function puntoRocio(T,RH){
+  const a = 17.62, b = 243.12;
+  const g = Math.log(RH/100) + (a*T)/(b+T);
+  return (b*g)/(a - g);
+}
+
+// ===== Campos dinámicos según hora =====
+const extraDiv = document.getElementById('extraCampos');
+document.getElementById('hora').addEventListener('change', e=>{
+  const val = e.target.value;
+  extraDiv.innerHTML = '';
+  if(['00','06','12','18'].includes(val)){
+    extraDiv.innerHTML += `<label>Agua caída (mm)</label>
+                           <input type="number" step="0.1" id="agua">`;
+  }
+  if(val==='00'){
+    extraDiv.innerHTML += `<label>Temperatura Máxima (°C)</label>
+                           <input type="number" step="0.1" id="tmax">`;
+  }
+  if(val==='12'){
+    extraDiv.innerHTML += `<label>Temperatura Mínima (°C)</label>
+                           <input type="number" step="0.1" id="tmin">`;
+  }
+});
+
+// ===== Guardar y cargar localStorage =====
+function guardarObservaciones() {
+  const datos = {};
+  document.querySelectorAll('.tarjeta').forEach(t => datos[t.dataset.hora] = t.dataset.info);
+  localStorage.setItem('observaciones', JSON.stringify(datos));
+}
+
+function cargarObservaciones() {
+  const datos = JSON.parse(localStorage.getItem('observaciones') || '{}');
+  const cont = document.getElementById('observaciones');
+  const horas = ["15","18","21","00","03","06","09","12"];
+  cont.innerHTML = '';
+  horas.forEach(h => {
+    const t = document.createElement('div');
+    t.className = 'tarjeta';
+    t.id = 'obs_'+h;
+    t.dataset.hora = h;
+    t.dataset.info = datos[h] || `<strong>${h} UTC</strong><br><em>Observación pendiente</em>`;
+    t.innerHTML = t.dataset.info;
+    cont.appendChild(t);
+  });
+  actualizarSumaAgua();
+}
+
+// ===== Sumar agua caída 00,06,12,18 =====
+function actualizarSumaAgua() {
+  let suma = 0;
+  ['00','06','12','18'].forEach(h => {
+    const t = document.getElementById('obs_'+h);
+    if(t){
+      const match = t.dataset.info.match(/Agua caída: (\d+\.?\d*)/);
+      if(match) suma += parseFloat(match[1]);
+    }
+  });
+  document.getElementById('recuadroAgua').textContent = `Agua caída total 24h: ${suma.toFixed(1)} mm`;
+}
+
+// ===== Enviar formulario =====
+document.getElementById('obsForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const hora = document.getElementById('hora').value;
+  const tSeca = parseFloat(document.getElementById('tseca').value);
+  const tHum  = parseFloat(document.getElementById('thum').value);
+  const pres  = parseFloat(document.getElementById('pres').value);
+  const agua  = document.getElementById('agua')?.value;
+  const tmin  = document.getElementById('tmin')?.value;
+  const tmax  = document.getElementById('tmax')?.value;
+
+  const hr = humedadRelativa(tSeca,tHum,pres);
+  const roc = puntoRocio(tSeca,hr);
+
+  let html = `<strong>Observación ${hora} UTC</strong><br>
+      Temp. Seca: ${tSeca.toFixed(1)} °C<br>
+      Temp. Húmeda: ${tHum.toFixed(1)} °C<br>
+      Humedad Relativa: ${Math.round(hr)} %<br>
+      Punto de Rocío: ${roc.toFixed(1)} °C
+      ${agua ? `<br>Agua caída: ${agua} mm` : ''}
+      ${tmin ? `<br>Temp. Mínima: ${tmin} °C` : ''}
+      ${tmax ? `<br>Temp. Máxima: ${tmax} °C` : ''}`;
+
+  const t = document.getElementById('obs_'+hora);
+  t.innerHTML = html;
+  t.dataset.info = html;
+
+  guardarObservaciones();
+  actualizarSumaAgua();
+  e.target.reset();
+  extraDiv.innerHTML = '';
+});
+
+// ===== Botón reinicio =====
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  if(confirm("¿Desea reiniciar todas las observaciones?")){
+    localStorage.removeItem('observaciones');
+    cargarObservaciones();
+  }
+});
+
+// ===== Cargar al iniciar =====
+window.onload = cargarObservaciones;
+
+// ===== Botón modo claro/oscuro =====
+document.getElementById('toggleMode').addEventListener('click', ()=>{
+  document.body.classList.toggle('dark');
+  const btn = document.getElementById('toggleMode');
+  btn.textContent = document.body.classList.contains('dark') ? 'Modo claro' : 'Modo oscuro';
+});
+</script>
+</body>
+</html>
