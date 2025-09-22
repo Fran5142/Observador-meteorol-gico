@@ -7,15 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg-light: #cce7ff;
-  --card-light: #003366;
+  --bg-light: #e0f7fa;      /* Fondo claro celeste suave */
+  --card-light: #0288d1;    /* Tarjetas azul intenso */
   --text-card-light: #ffffff;
-  --bg-dark: #1e2a35;
-  --card-dark: #2f4a60;
-  --text-dark: #e0e0e0;
-  --primary: #0066cc;
-  --accent: #2196f3;
-  --footer-color: #00509e; /* color más acorde para el nombre del cabo */
+  --bg-dark: #263238;       /* Fondo oscuro moderno */
+  --card-dark: #37474f;     /* Tarjetas oscuro elegante */
+  --text-dark: #eceff1;
+  --primary: #00acc1;       /* Botones principal */
+  --accent: #26c6da;        /* Hover botones */
+  --footer-color: #0077b6;  /* Nombre del cabo */
 }
 
 body {
@@ -35,22 +35,26 @@ h1 { text-align: center; margin-bottom: 1rem; }
 /* Contenedor botones alineados */
 #botones {
   display: flex;
-  gap: 10px;
+  gap: 25px; /* Más separación */
   justify-content: center;
   margin-bottom: 1rem;
 }
 
 #toggleMode, #resetBtn {
-  padding: 0.5rem 1rem;
-  background: rgba(0,0,0,0.15);
-  color: #222;
-  border: none;
-  border-radius: 20px;
+  padding: 0.6rem 1.5rem;
   font-weight: 600;
+  border-radius: 25px;
+  border: none;
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  font-size: 1rem;
+  transition: transform 0.2s, box-shadow 0.3s;
 }
-#toggleMode:hover, #resetBtn:hover { background: rgba(0,0,0,0.25); }
+#toggleMode:hover, #resetBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
 
 form {
   background: #e6f0fa;
@@ -134,7 +138,8 @@ body.dark {
 body.dark form { background: #2c4660; }
 body.dark input, body.dark select { background: #2e3b47; border-color: #555; color: #fff; }
 body.dark .tarjeta { background: var(--card-dark); color: var(--text-dark); }
-body.dark button[type="submit"], body.dark #toggleMode, body.dark #resetBtn { background: #1d78c1; }
+body.dark button[type="submit"] { background: #00838f; }
+body.dark #toggleMode, body.dark #resetBtn { background: linear-gradient(135deg, #00838f, #26c6da); color: #fff; }
 body.dark #recuadroAgua { background: #2196f3; color: #e0e0e0; }
 
 #extraCampos { margin-top: 0.5rem; }
