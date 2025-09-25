@@ -13,9 +13,10 @@
   --footer-color: #0077b6;
   --primary: #00acc1;
   --accent: #26c6da;
+  --error-bg: #d32f2f;
 }
 
-/* Body y título */
+/* ================== BODY ================== */
 body {
   font-family: 'Poppins', sans-serif;
   background: var(--bg-light);
@@ -29,7 +30,7 @@ body {
 }
 h1 { text-align: center; margin-bottom: 1rem; }
 
-/* Botones */
+/* ================== BOTONES ================== */
 #botones {
   display: flex;
   gap: 25px;
@@ -47,9 +48,12 @@ h1 { text-align: center; margin-bottom: 1rem; }
   font-size: 1rem;
   transition: transform 0.2s, box-shadow 0.3s;
 }
-#toggleMode:hover, #resetBtn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+#toggleMode:hover, #resetBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
 
-/* Formulario */
+/* ================== FORMULARIO ================== */
 form {
   background: #e6f0fa;
   padding: 1.5rem;
@@ -69,7 +73,11 @@ input, select {
   background: #fff;
   color: #222;
 }
-input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 6px var(--primary); }
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 6px var(--primary);
+}
 button[type="submit"] {
   margin-top: 1rem;
   padding: 0.8rem;
@@ -85,7 +93,7 @@ button[type="submit"] {
 }
 button[type="submit"]:hover { background: var(--accent); }
 
-/* Observaciones */
+/* ================== OBSERVACIONES ================== */
 #observaciones {
   display: flex;
   flex-wrap: wrap;
@@ -100,7 +108,7 @@ button[type="submit"]:hover { background: var(--accent); }
   flex: 1 1 22%;
   min-width: 220px;
   box-sizing: border-box;
-  text-align: center;
+  text-align: left;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   transition: background 0.5s, color 0.3s, transform 0.4s;
   opacity: 0;
@@ -108,14 +116,10 @@ button[type="submit"]:hover { background: var(--accent); }
   background: #0288d1;
   color: #fff;
 }
-
-/* Colores especiales */
 .tarjeta.h12 { background: #b2ebf2; color: #222; }
 .tarjeta.h00 { background: #ffb74d; color: #222; }
-
 .tarjeta.mostrar { opacity:1; transform: translateY(0); }
 
-/* Recuadro agua total */
 #recuadroAgua {
   background: #0066cc;
   color: #fff;
@@ -128,23 +132,65 @@ button[type="submit"]:hover { background: var(--accent); }
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-/* Modo oscuro */
+#mensajeError {
+  display: none;
+  position: fixed;
+  left: 50%;
+  bottom: 20%;
+  transform: translateX(-50%);
+  max-width: 80%;
+  background: var(--error-bg);
+  color: #fff;
+  padding: 1.2rem 2rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  z-index: 9999;
+  animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ================== MODO OSCURO ================== */
 body.dark { background: var(--bg-dark); color: var(--text-dark); }
 body.dark form { background: #2c4660; }
 body.dark input, body.dark select { background: #2e3b47; border-color: #555; color: #fff; }
 body.dark .tarjeta { background: #37474f; color: #eceff1; }
 body.dark .tarjeta.h12 { background: #81d4fa; color: #222; }
 body.dark .tarjeta.h00 { background: #ff8a65; color: #222; }
-
-#extraCampos { margin-top: 0.5rem; }
-
-footer {
-  margin-top: 2rem;
-  font-size: 0.9rem;
-  text-align: center;
-}
-footer span { color: var(--footer-color); }
 body.dark footer span { color: #77b5fe; }
+
+/* ================== TARJETA ESTACION QUINZONA 3 COLUMNAS ================== */
+#estacionCard{
+  width:100%;
+  max-width:900px;
+  margin:40px auto;
+  padding:25px;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 12px 30px rgba(2,6,23,0.15);
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:15px;
+}
+#estacionCard h2 { grid-column: 1/-1; text-align:center; margin-bottom:20px; color:#0288d1; }
+.dato { padding:15px; background:linear-gradient(145deg,#0288d1,#26c6da); border-radius:12px; text-align:center; color:#fff; font-weight:600; font-size:1rem; box-shadow:0 4px 15px rgba(0,0,0,0.2);}
+.label { display:block; font-size:0.9rem; margin-bottom:5px; color:#e0f7fa; }
+@media (max-width:860px){ 
+  #estacionCard{ 
+    grid-template-columns: 1fr; 
+    padding:16px;
+  } 
+}
+
+/* ================== EXTRA ================== */
+#extraCampos { margin-top: 0.5rem; }
+footer { margin-top: 2rem; font-size: 0.9rem; text-align: center; }
+footer span { color: var(--footer-color); }
 </style>
 </head>
 <body>
@@ -188,10 +234,23 @@ body.dark footer span { color: #77b5fe; }
 
 <div id="observaciones"></div>
 
+<!-- ================== TARJETA ESTACION ================== -->
+<div id="estacionCard">
+  <h2>Estación Isla Tenglo</h2>
+  <div class="dato"><span class="label">Día/mes/año</span> <span id="fecha">--</span></div>
+  <div class="dato"><span class="label">Hora</span> <span id="horaEst">--</span></div>
+  <div class="dato"><span class="label">Presión Tenglo</span> <span id="presion">--</span> hPa</div>
+  <div class="dato"><span class="label">Presión PTU</span> <span id="presionPTU">--</span> hPa</div>
+  <div class="dato"><span class="label">Viento</span> <span id="viento">--</span></div>
+  <div class="dato"><span class="label">Rachas</span> <span id="Rachas">--</span> nds </div>
+</div>
+
+<div id="mensajeError"></div>
+
 <footer>Creado por <span>Cabo 2º (Met.) Francisco Salas Muñoz</span>. Fecha: 22/09/2025</footer>
 
 <script>
-// ===== Cálculos =====
+// ================== FUNCIONES METEO ==================
 function es(T){ return 6.112 * Math.exp((17.62 * T)/(243.12 + T)); }
 function humedadRelativa(tSeca, tHum, pres){
   const eHum = es(tHum) - 0.00066 * pres * (tSeca - tHum);
@@ -203,8 +262,14 @@ function puntoRocio(T,RH){
   const g = Math.log(RH/100) + (a*T)/(b+T);
   return (b*g)/(a - g);
 }
+function mostrarError(texto){
+  const msg = document.getElementById('mensajeError');
+  msg.textContent = texto;
+  msg.style.display = 'block';
+  setTimeout(()=>{ msg.style.display = 'none'; }, 4000);
+}
 
-// ===== Campos dinámicos según hora =====
+// ================== FORMULARIO ==================
 const extraDiv = document.getElementById('extraCampos');
 document.getElementById('hora').addEventListener('change', e=>{
   const val = e.target.value;
@@ -223,13 +288,11 @@ document.getElementById('hora').addEventListener('change', e=>{
   }
 });
 
-// ===== Guardar y cargar localStorage =====
 function guardarObservaciones() {
   const datos = {};
   document.querySelectorAll('.tarjeta').forEach(t => datos[t.dataset.hora] = t.dataset.info);
   localStorage.setItem('observaciones', JSON.stringify(datos));
 }
-
 function cargarObservaciones() {
   const datos = JSON.parse(localStorage.getItem('observaciones') || '{}');
   const cont = document.getElementById('observaciones');
@@ -248,20 +311,19 @@ function cargarObservaciones() {
   actualizarSumaAgua();
 }
 
-// ===== Sumar agua caída 00,06,12,18 =====
 function actualizarSumaAgua() {
   let suma = 0;
   ['00','06','12','18'].forEach(h => {
     const t = document.getElementById('obs_'+h);
     if(t){
-      const match = t.dataset.info.match(/Agua caída: (\d+\.?\d*)/);
+      const match = t.dataset.info.match(/Agua caída:\s?(\d+\.?\d*)/);
       if(match) suma += parseFloat(match[1]);
     }
   });
-  document.getElementById('recuadroAgua').textContent = `Agua caída total 24h: ${suma.toFixed(1)} mm`;
+  document.getElementById('recuadroAgua').textContent =
+    `Agua caída total 24h: ${suma.toFixed(1)} mm`;
 }
 
-// ===== Enviar formulario =====
 document.getElementById('obsForm').addEventListener('submit', e=>{
   e.preventDefault();
   const hora = document.getElementById('hora').value;
@@ -272,20 +334,25 @@ document.getElementById('obsForm').addEventListener('submit', e=>{
   const tmin  = document.getElementById('tmin')?.value;
   const tmax  = document.getElementById('tmax')?.value;
 
-  const hr = humedadRelativa(tSeca,tHum,pres);
+  // VALIDACION TEMPERATURA SECA vs HUMEDA
+  if (!(tSeca === tHum)) { // excepción si son iguales
+    if (tSeca <= tHum) { mostrarError("La temperatura SECA debe ser mayor que la HÚMEDA."); return; }
+  }
+
+  if (tmax && parseFloat(tmax) <= tSeca) { mostrarError(`La Temperatura Máxima (${tmax}°C) debe ser mayor que la Temperatura Seca (${tSeca}°C).`); return; }
+  if (tmin && parseFloat(tmin) >= tSeca) { mostrarError(`La Temperatura Mínima (${tmin}°C) debe ser menor que la Temperatura Seca (${tSeca}°C).`); return; }
+
+  const hr = (tSeca === tHum) ? 100 : humedadRelativa(tSeca,tHum,pres); // excepción: HR = 100%
   const roc = puntoRocio(tSeca,hr);
 
-  // *** NUEVO ORDEN Y SOLO ESOS CUATRO DATOS ***
-  let html = `<strong>Observación ${hora} UTC</strong><br>
-      Temp. Seca: ${tSeca.toFixed(1)} °C<br>
-      Punto de Rocío: ${roc.toFixed(1)} °C<br>
-      Temp. Húmeda: ${tHum.toFixed(1)} °C<br>
-      Humedad Relativa: ${Math.round(hr)} %`;
-
-  // Datos extra (agua, mín/máx) solo para sumar agua, no para mostrar
-  if (agua) html += `<br>Agua caída: ${agua} mm`;
-  if (tmin) html += `<br>Temp. Mínima: ${tmin} °C`;
-  if (tmax) html += `<br>Temp. Máxima: ${tmax} °C`;
+  let html = `<strong>${hora} UTC</strong><br>
+       Tempe. Seca: ${tSeca.toFixed(1)} °C<br>
+       Punto de Rocío: ${roc.toFixed(1)} °C<br>
+       Temp. Húmeda: ${tHum.toFixed(1)} °C<br>
+       Humedad Relativa: ${Math.round(hr)} %` +
+       (agua ? `<br>Agua caída: ${agua} mm` : '') +
+       (tmin ? `<br>Temp. Mínima: ${tmin} °C` : '') +
+       (tmax ? `<br>Temp. Máxima: ${tmax} °C` : '');
 
   const t = document.getElementById('obs_'+hora);
   t.innerHTML = html;
@@ -299,7 +366,6 @@ document.getElementById('obsForm').addEventListener('submit', e=>{
   extraDiv.innerHTML = '';
 });
 
-// ===== Botón reinicio =====
 document.getElementById('resetBtn').addEventListener('click', ()=>{
   if(confirm("¿Desea reiniciar todas las observaciones?")){
     localStorage.removeItem('observaciones');
@@ -307,15 +373,48 @@ document.getElementById('resetBtn').addEventListener('click', ()=>{
   }
 });
 
-// ===== Cargar al iniciar =====
 window.onload = cargarObservaciones;
 
-// ===== Botón modo claro/oscuro =====
+// ================== MODO OSCURO ==================
 document.getElementById('toggleMode').addEventListener('click', ()=>{
   document.body.classList.toggle('dark');
   const btn = document.getElementById('toggleMode');
-  btn.textContent = document.body.classList.contains('dark') ? 'Modo claro' : 'Modo oscuro';
+  btn.textContent = document.body.classList.contains('dark')
+    ? 'Modo claro' : 'Modo oscuro';
 });
+
+// ================== ESTACION QUINZONA ==================
+function convertirGradosAPuntoCardinal(grados) {
+  const direcciones = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+  const indice = Math.round(grados / 22.5) % 16;
+  return direcciones[indice];
+}
+async function cargarDatosEstacion() {
+  try {
+    const response = await fetch('https://corsproxy.io/?https://web.directemar.cl/met/jturno/estaciones/quinzona/realtime.txt');
+    const texto = await response.text();
+    const lineas = texto.trim().split('\n');
+    const ultimaLinea = lineas[lineas.length - 1];
+    const datos = ultimaLinea.trim().split(/\s+/);
+
+    const direccionGrados = parseFloat(datos[7]);
+    const intensidadNudos = datos[5];
+    const direccionCardinal = convertirGradosAPuntoCardinal(direccionGrados);
+
+    document.getElementById('fecha').textContent = datos[0];
+    document.getElementById('horaEst').textContent = datos[1];
+    document.getElementById('presion').textContent = datos[10];
+    document.getElementById('presionPTU').textContent = (datos[10]-0.8).toFixed(1); // presión PTU
+    document.getElementById('viento').textContent = `${direccionGrados}° (${direccionCardinal}) ${intensidadNudos} nds`;
+    document.getElementById('Rachas').textContent = datos[40];
+
+  } catch (error) {
+    console.error('Error al cargar los datos:', error);
+    document.getElementById('estacionCard').innerHTML = '<p style="color:#fff;text-align:center;">Error al cargar datos.</p>';
+  }
+}
+cargarDatosEstacion();
+setInterval(cargarDatosEstacion, 5*60*1000);
 </script>
 </body>
 </html>
