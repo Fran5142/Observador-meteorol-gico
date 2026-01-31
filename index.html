@@ -391,7 +391,7 @@ function convertirGradosAPuntoCardinal(grados) {
 }
 async function cargarDatosEstacion() {
   try {
-    const response = await fetch('https://corsproxy.io/?https://web.directemar.cl/met/jturno/estaciones/quinzona/realtime.txt');
+    const response = await fetch('https://meteorologia-api.salaspancho16.workers.dev/quinzona');
     const texto = await response.text();
     const lineas = texto.trim().split('\n');
     const ultimaLinea = lineas[lineas.length - 1];
@@ -418,3 +418,4 @@ setInterval(cargarDatosEstacion, 5*60*1000);
 </script>
 </body>
 </html>
+
